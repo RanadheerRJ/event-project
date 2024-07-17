@@ -8,11 +8,8 @@ const Events = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/events/')
-      .then(response => {
-        console.log('Fetched events:', response.data);
-        setEvents(response.data);
-      })
+    axios.get('http://18.236.133.167/api/events/')
+      .then(response => setEvents(response.data))
       .catch(error => console.error('Error fetching events:', error));
   }, []);
 
@@ -25,13 +22,9 @@ const Events = () => {
       <h1>Upcoming Events</h1>
       <p>Join us for these exciting events and celebrations. Click on an event to learn more and book your tickets.</p>
       <div className="events-list">
-        {events.length > 0 ? (
-          events.map(event => (
-            <EventCard key={event.id} event={event} onBookPass={() => handleBookPass(event)} />
-          ))
-        ) : (
-          <p>No events available</p>
-        )}
+        {events.map(event => (
+          <EventCard key={event.id} event={event} onBookPass={() => handleBookPass(event)} />
+        ))}
       </div>
     </div>
   );

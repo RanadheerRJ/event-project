@@ -23,7 +23,7 @@ const ContactUs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      axios.post('http://localhost:8000/api/contact/', {
+      axios.post('http://18.236.133.167/api/contact/', {
         name,
         phone_number: phoneNumber,
         email,

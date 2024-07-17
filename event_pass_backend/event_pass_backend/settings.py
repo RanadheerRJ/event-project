@@ -25,8 +25,14 @@ SECRET_KEY = 'django-insecure-7c+dzy-#k=0(bfyy@hs$-g-7up%c%39h&)$1^tlc-^=!xja_%p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '18.236.133.167',  # Your EC2 instance's public IP address
+    'event-booking-frontend.s3-website-us-west-2.amazonaws.com',  # S3 bucket URL
+    'localhost',
+    '127.0.0.1',
+]
 
+print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
 
 # Application definition
 
@@ -40,27 +46,22 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'corsheaders',
-
-
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS Middleware should be placed above CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-
 ]
-
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://event-booking-frontend.s3-website-us-west-2.amazonaws.com",
 ]
-
 
 ROOT_URLCONF = 'event_pass_backend.urls'
 
@@ -134,3 +135,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
